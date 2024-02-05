@@ -11,7 +11,11 @@ namespace Framework;
 //    http_response_code(404);
 //    return require basePath($routes['/404']);
 //}
-class Router {
+
+use App\Controllers\ErrorController;
+
+class Router
+{
     protected $routes = [];
 
     /**
@@ -20,8 +24,9 @@ class Router {
      * @param string $action
      * @return void
      */
-    public function registeredRoute($method,$uri , $action ){
-        list($controller , $controllerMethod) = explode('@' , $action);
+    public function registeredRoute($method, $uri, $action)
+    {
+        list($controller, $controllerMethod) = explode('@', $action);
 //        inspectAndDie($controller);
         $this->routes[] = [
             'method' => $method,
@@ -30,6 +35,7 @@ class Router {
             'controllerMethod' => $controllerMethod
         ];
     }
+
     /**
      * Add a GET route
      *
@@ -38,10 +44,11 @@ class Router {
      * @return void
      *
      */
-    public function get($uri , $controller)
+    public function get($uri, $controller)
     {
-        $this->registeredRoute('GET' , $uri , $controller);
+        $this->registeredRoute('GET', $uri, $controller);
     }
+
     /**
      * Add a POST route
      *
@@ -50,10 +57,11 @@ class Router {
      * @return void
      *
      */
-    public function post($uri , $controller)
+    public function post($uri, $controller)
     {
-        $this->registeredRoute('POST' , $uri , $controller);
+        $this->registeredRoute('POST', $uri, $controller);
     }
+
     /**
      * Add a PUT route
      *
@@ -62,10 +70,11 @@ class Router {
      * @return void
      *
      */
-    public function put($uri , $controller)
+    public function put($uri, $controller)
     {
-        $this->registeredRoute('PUT' , $uri , $controller);
+        $this->registeredRoute('PUT', $uri, $controller);
     }
+
     /**
      * Add a DELETE route
      *
@@ -74,22 +83,9 @@ class Router {
      * @return void
      *
      */
-    public function delete($uri , $controller)
+    public function delete($uri, $controller)
     {
-        $this->registeredRoute('DELETE' , $uri , $controller);
-    }
-
-    /**
-     * Load error page
-     * @param int $httpCode
-     * 
-     * @return void
-     */
-    public function error($httpCode = 404)
-    {
-        http_response_code($httpCode);
-        loadView("error/$httpCode");
-        exit;
+        $this->registeredRoute('DELETE', $uri, $controller);
     }
 
     /**
@@ -99,10 +95,11 @@ class Router {
      * @param string $method
      * @return void
      */
-    public function route($uri, $method){
+    public function route($uri, $method)
+    {
 //        inspect($this->routes);
-        foreach ($this->routes as $route){
-            if($route['uri'] === $uri && $route['method'] === $method){
+        foreach ($this->routes as $route) {
+            if ($route['uri'] === $uri && $route['method'] === $method) {
                 $controller = 'App\\Controllers\\' . $route['controller'];
                 $controllerMethod = $route['controllerMethod'];
 
@@ -115,6 +112,6 @@ class Router {
             }
         }
 
-        $this->error(404);
+        ErrorController::notFound();
     }
 }

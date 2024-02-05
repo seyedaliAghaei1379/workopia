@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use Framework\Database;
 
+
 class ListingController
 {
 
@@ -34,8 +35,7 @@ class ListingController
         $id = isset($_GET['id']) ? $_GET['id'] : "";
 
         if($id === ""){
-            http_response_code(404);
-            loadView('error/404');
+            ErrorController::notFound();
             exit();
         }
 
