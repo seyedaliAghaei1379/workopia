@@ -1,0 +1,16 @@
+{
+  "name": "seyedali/workopia-php",
+  "description": "Job listing Application",
+  "authors": [
+    {
+      "name": "SeyedALi SeyedAghaei",
+      "email": "seyedali1379aghaei@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Framework\\": "Framework/",
+      "App\\": "App/"
+    }
+  }
+}
