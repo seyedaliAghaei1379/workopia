@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Framework\Database;
+use Framework\Validation;
 
 class HomeController{
 
@@ -16,7 +17,9 @@ class HomeController{
 
     public function index()
     {
-        $listings = $this->db->query('SELECT * FROM listings')->fetchAll();
+//        inspectAndDie(Validation::email("amin2@FMIAL.L"));
+
+        $listings = $this->db->query('SELECT * FROM listings ORDER BY created_at DESC LIMIT 6')->fetchAll();
         loadView('home' , [
             'listings' => $listings,
         ]);
